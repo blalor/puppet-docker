@@ -7,7 +7,7 @@ hostname: <%= @hostname %>
 <%- if not @command.empty? -%>
 command:
     <%- @command.each do |cmd| -%>
-    - "<%= cmd %>"
+    - <% if cmd.class == Fixnum %><%= cmd %><% else %>"<%= cmd %>"<% end %>
     <%- end -%>
 <%- end -%>
 
