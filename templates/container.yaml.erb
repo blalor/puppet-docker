@@ -5,17 +5,20 @@ image:    <%= @image %>
 hostname: <%= @hostname %>
 
 <%- if not @command.empty? -%>
-command: [ <%- @command.each do |cmd| -%> "<%= cmd %>", <%- end -%> ]
+command:
+    <%- @command.each do |cmd| -%>
+    - "<%= cmd %>"
+    <%- end -%>
 <%- end -%>
 
-<%- if @env -%>
+<%- if not @env.empty? -%>
 env:
     <%- @env.sort.each do |key, value| -%>
     <%= key %>: <%= value %>
     <%- end -%>
 <%- end -%>
 
-<%- if @ports -%>
+<%- if not @ports.empty? -%>
 ports:
     <%- @ports.sort.each do |port_spec, data| -%>
     <%= port_spec %>:
@@ -25,7 +28,7 @@ ports:
     <%- end -%>
 <%- end -%>
 
-<%- if @volumes -%>
+<%- if not @volumes.empty? -%>
 volumes:
     <%- @volumes.sort.each do |path, data| -%>
     <%= path %>:
