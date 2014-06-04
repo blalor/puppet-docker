@@ -1,0 +1,36 @@
+<%# -*- yaml -*- %>
+---
+name:     <%= @name %>
+image:    <%= @image %>
+hostname: <%= @hostname %>
+
+<%- if not @command.empty? -%>
+command: [ <%- @command.each do |cmd| -%> "<%= cmd %>", <%- end -%> ]
+<%- end -%>
+
+<%- if @env -%>
+env:
+    <%- @env.sort.each do |key, value| -%>
+    <%= key %>: <%= value %>
+    <%- end -%>
+<%- end -%>
+
+<%- if @ports -%>
+ports:
+    <%- @ports.sort.each do |port_spec, data| -%>
+    <%= port_spec %>:
+        <%- data.sort.each do |key, value| -%>
+        <%= key %>: <%= value %>
+        <%- end -%>
+    <%- end -%>
+<%- end -%>
+
+<%- if @volumes -%>
+volumes:
+    <%- @volumes.sort.each do |path, data| -%>
+    <%= path %>:
+        <%- data.sort.each do |key, value| -%>
+        <%= key %>: <%= value %>
+        <%- end -%>
+    <%- end -%>
+<%- end -%>

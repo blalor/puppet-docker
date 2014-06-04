@@ -1,0 +1,10 @@
+# -*- bash -*-
+
+other_args="<%= @dockerd_other_args %>"
+
+export TMPDIR="/var/lib/docker/tmp"
+[ -d ${TMPDIR} ] || mkdir -p ${TMPDIR}
+
+## set soft/hard number of file descriptors
+ulimit -Hn 32000
+ulimit -Sn 32000
