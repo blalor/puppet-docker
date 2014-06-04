@@ -45,6 +45,6 @@ define docker::container(
         group   => root,
         mode    => '0600',
         content => template('docker/container.yaml.erb'),
-        notify  => Exec['docker_sync'],
+        notify  => Exec['docker-sync'],
     }
 }

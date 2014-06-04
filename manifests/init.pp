@@ -4,6 +4,9 @@ class docker (
     $docker_sync_version = 'installed',
     $dockerd_other_args = '',
 ) {
+    ## used by docker::container
+    $containers_d = '/etc/docker.d/containers'
+    
     package {'docker-io':
         ensure => $docker_version,
     }
@@ -30,7 +33,7 @@ class docker (
     }
     
     ## purge unmanaged containers
-    file {'/etc/docker.d/containers':
+    file {$containers_d:
         ensure  => directory,
         purge   => true,
         recurse => true,
@@ -39,7 +42,7 @@ class docker (
     ## downloads images; could take a while, so disabling timeout
     ## gets notified by files created in docker::container
     exec {'docker-sync':
-        command => '/usr/bin/docker-sync /etc/docker.d/containers',
+        command => "/usr/bin/docker-sync ${containers_d}",
         timeout => 0,
         require => Service['docker'],
     }
